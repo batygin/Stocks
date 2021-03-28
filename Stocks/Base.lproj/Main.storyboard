@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="UsB-QM-Wc9">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Stocks-->
+        <scene sceneID="WCL-2c-c3w">
+            <objects>
+                <tableViewController id="Oq4-xr-aFH" customClass="StocksListTableViewController" customModule="Stocks" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="pni-PV-yMo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="Mv2-oR-GK6">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="VnV-87-pcz">
+                                    <rect key="frame" x="20" y="8" width="374" height="29"/>
+                                    <segments>
+                                        <segment title="All"/>
+                                        <segment title="Favorites"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="favoriteSegmentedTapped:" destination="Oq4-xr-aFH" eventType="valueChanged" id="54z-dW-old"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="VnV-87-pcz" firstAttribute="leading" secondItem="Mv2-oR-GK6" secondAttribute="leading" constant="20" id="BPi-0T-BAz"/>
+                                <constraint firstAttribute="trailing" secondItem="VnV-87-pcz" secondAttribute="trailing" constant="20" id="L7N-dy-mdA"/>
+                                <constraint firstItem="VnV-87-pcz" firstAttribute="top" secondItem="Mv2-oR-GK6" secondAttribute="top" constant="8" id="wuH-PV-Y1U"/>
+                                <constraint firstAttribute="bottom" secondItem="VnV-87-pcz" secondAttribute="bottom" constant="8" id="zBJ-j7-wE4"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="itemCell" id="AIL-cF-atX" customClass="QuoteCell" customModule="Stocks" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="414" height="54.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AIL-cF-atX" id="fOX-Qi-THJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="54.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qEa-hP-mWe">
+                                            <rect key="frame" x="20" y="8" width="374" height="38.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="czD-wh-HbQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="374" height="22"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Dc-DU-20f">
+                                                            <rect key="frame" x="0.0" y="0.0" width="46.5" height="22"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GMq-5b-792" userLabel="Favorite">
+                                                            <rect key="frame" x="46.5" y="0.0" width="28.5" height="22"/>
+                                                            <color key="tintColor" name="AccentColor"/>
+                                                            <inset key="contentEdgeInsets" minX="4" minY="0.0" maxX="4" maxY="0.0"/>
+                                                            <state key="normal" image="heart" catalog="system"/>
+                                                            <state key="selected" image="heart.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="favoriteButtonTapped:" destination="AIL-cF-atX" eventType="touchUpInside" id="b2K-sz-VO2"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gne-va-cwb">
+                                                            <rect key="frame" x="75" y="0.0" width="299" height="22"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8eu-mz-J0G">
+                                                    <rect key="frame" x="0.0" y="22" width="374" height="16.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Corp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhj-xh-1kR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="339" height="16.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                            <color key="textColor" systemColor="systemGrayColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Trend" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gBC-ga-B87">
+                                                            <rect key="frame" x="339" y="0.0" width="35" height="16.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                            <color key="textColor" systemColor="systemGrayColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="qEa-hP-mWe" secondAttribute="trailing" constant="20" id="8M6-gi-js6"/>
+                                        <constraint firstItem="qEa-hP-mWe" firstAttribute="leading" secondItem="fOX-Qi-THJ" secondAttribute="leading" constant="20" id="8xI-4t-3m4"/>
+                                        <constraint firstAttribute="bottom" secondItem="qEa-hP-mWe" secondAttribute="bottom" constant="8" id="JPK-m1-jX2"/>
+                                        <constraint firstItem="qEa-hP-mWe" firstAttribute="top" secondItem="fOX-Qi-THJ" secondAttribute="top" constant="8" id="Zgt-4H-7CS"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="corpLabel" destination="Hhj-xh-1kR" id="VMI-yq-Ql9"/>
+                                    <outlet property="favoriteButton" destination="GMq-5b-792" id="xmH-Vx-Vm1"/>
+                                    <outlet property="nameLabel" destination="2Dc-DU-20f" id="XB4-kj-rmK"/>
+                                    <outlet property="priceLabel" destination="Gne-va-cwb" id="gI0-xv-vr5"/>
+                                    <outlet property="trendLabel" destination="gBC-ga-B87" id="FeS-f7-WBs"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Oq4-xr-aFH" id="Ua4-cN-8PE"/>
+                            <outlet property="delegate" destination="Oq4-xr-aFH" id="fF6-1I-ech"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Stocks" largeTitleDisplayMode="always" id="t4k-6b-edj"/>
+                    <connections>
+                        <outlet property="favoriteSegmentedControl" destination="VnV-87-pcz" id="evK-AX-Pim"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TNz-i0-qVh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1828.985507246377" y="35.491071428571423"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ae2-tV-AOZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UsB-QM-Wc9" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="V8r-Nv-YPd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Oq4-xr-aFH" kind="relationship" relationship="rootViewController" id="wio-vT-kOi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1s8-sh-WaN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="918.84057971014499" y="35.491071428571423"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
