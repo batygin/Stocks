@@ -1,23 +1,23 @@
 import UIKit
 
-class StocksListTableViewController: UITableViewController, QuoteCellDelegate {
+class StocksListTableViewController: UITableViewController {
     
     @IBOutlet var favoriteSegmentedControl: UISegmentedControl!
     
-    func favoriteTapped(sender: QuoteCell) {
-        guard var matchItem = items.first(where: { $0.id == sender.quotes?.id} ) else { return }
-        guard let indexItem = items.firstIndex(where: { $0.id == sender.quotes?.id} ) else { return }
-        matchItem.favorite.toggle()
-        items[indexItem] = matchItem
-        
-        favoriteItems = items.filter { $0.favorite }
-        tableView.reloadData()
-    }
-    
     let quotesItemController = QuotesItemController()
+    let searchController = UISearchController(searchResultsController: nil)
     
     var items = [Quotes]()
     var favoriteItems = [Quotes]()
+    var filteredItems = [Quotes]()
+    
+    var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
+    
+    var isFiltering: Bool {
+      return searchController.isActive && !isSearchBarEmpty
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +33,11 @@ class StocksListTableViewController: UITableViewController, QuoteCellDelegate {
                 }
             }
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 
     // MARK: - Table view data source
@@ -42,6 +47,10 @@ class StocksListTableViewController: UITableViewController, QuoteCellDelegate {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if isFiltering {
+            return filteredItems.count
+        }
         
         let selectedIndex = self.favoriteSegmentedControl.selectedSegmentIndex
         switch selectedIndex {
@@ -56,6 +65,13 @@ class StocksListTableViewController: UITableViewController, QuoteCellDelegate {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! QuoteCell
+        
+        if isFiltering {
+            let item = filteredItems[indexPath.row]
+            cell.update(with: item)
+            cell.delegate = self
+            return cell
+        }
         
         let selectedIndex = favoriteSegmentedControl.selectedSegmentIndex
         switch selectedIndex {
@@ -79,7 +95,46 @@ class StocksListTableViewController: UITableViewController, QuoteCellDelegate {
     }
     
     @IBAction func favoriteSegmentedTapped(_ sender: UISegmentedControl) {
-            self.tableView.reloadData()
+        updateSearchResults(for: searchController)
+        self.tableView.reloadData()
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        
+        let selectedIndex = favoriteSegmentedControl.selectedSegmentIndex
+        if selectedIndex == 0 {
+            filteredItems = items.filter { (quote: Quotes) -> Bool in
+              return quote.name.lowercased().contains(searchText.lowercased()) || quote.corp.lowercased().contains(searchText.lowercased())
+            }
+        } else {
+            filteredItems = favoriteItems.filter { (quote: Quotes) -> Bool in
+              return quote.name.lowercased().contains(searchText.lowercased()) || quote.corp.lowercased().contains(searchText.lowercased())
+            }
+        }
+      tableView.reloadData()
+    }
+
+}
+
+extension StocksListTableViewController: QuoteCellDelegate, UISearchResultsUpdating {
+    
+    func favoriteTapped(sender: QuoteCell) {
+        guard var matchItem = items.first(where: { $0.id == sender.quotes?.id} ) else { return }
+        guard let indexItem = items.firstIndex(where: { $0.id == sender.quotes?.id} ) else { return }
+        matchItem.favorite.toggle()
+        items[indexItem] = matchItem
+        
+        if isFiltering {
+            updateSearchResults(for: searchController)
+        }
+        
+        favoriteItems = items.filter { $0.favorite }
+        tableView.reloadData()
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        filterContentForSearchText(searchBar.text!)
     }
     
 }
