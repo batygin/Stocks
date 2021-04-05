@@ -95,12 +95,15 @@ class StocksListTableViewController: UITableViewController {
     }
     
     @IBAction func favoriteSegmentedTapped(_ sender: UISegmentedControl) {
-        updateSearchResults(for: searchController)
+        
+        if isFiltering {
+            updateSearchResults(for: searchController)
+        }
         self.tableView.reloadData()
     }
     
     func filterContentForSearchText(_ searchText: String) {
-        
+
         let selectedIndex = favoriteSegmentedControl.selectedSegmentIndex
         if selectedIndex == 0 {
             filteredItems = items.filter { (quote: Quotes) -> Bool in
